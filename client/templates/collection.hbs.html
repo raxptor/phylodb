@@ -1,0 +1,38 @@
+<template name="BreadcrumbCollection">
+    {{# if isSubReady 'oneCollection' }}
+        {{> BreadcrumbCollections }}
+        <li>
+            <a href="{{ urlFor 'oneCollection' id=oneCollection.slug}}">
+            {{ oneCollection.name }}</a>
+        </li>
+    {{/ if }}
+    
+</template>
+
+<template name="Collection">
+    {{# if isSubReady 'oneCollection' }}
+        <h2 style="font-weight: 200">{{ oneCollection.name }}</h2>
+        <hr />
+        
+        <div class="uk-grid uk-grid-divider uk-grid-match" data-uk-grid-match="{target:'.uk-panel'}">
+            <div class="uk-width-1-3">
+                <a href="{{ urlFor 'oneCollectionTaxa' id=oneCollection.slug }}" class="uk-panel uk-panel-hover">
+                    <h3 class="uk-panel-title"><i class="uk-icon-list-ul"></i> Taxa</h3>
+                    This collection contains <strong>{{ collectionTaxa.count }}</strong> taxa.
+                </a>
+            </div>
+            <div class="uk-width-1-3">
+                <a href="{{ urlFor 'oneCollectionCharacterStatements' id=oneCollection.slug }}" class="uk-panel uk-panel-hover">
+                    <h3 class="uk-panel-title"><i class="uk-icon-list-ul"></i> Character Statements</h3>
+                    This collection contains <strong>{{ collectionCharacterStatements.count }}</strong> character statements.
+                </a>
+            </div>
+            <div class="uk-width-1-3">
+                <a href="{{ urlFor 'oneCollectionBrowse' id=oneCollection.slug }}" class="uk-panel uk-panel-hover">
+                    <h3 class="uk-panel-title"><i class="uk-icon-search"></i> Browse</h3>
+                    Use this tool to browse and update character statements for taxa in the collection.
+                </a>
+            </div>
+        </div>
+    {{/ if }}
+</template>

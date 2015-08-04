@@ -1,0 +1,39 @@
+<template name="Layout">
+    <div id="TopBar">
+        {{> Template.dynamic template=topbar }}
+    </div>
+
+    <div id="content">
+        <div class="uk-container uk-container-center">
+            <div class="uk-grid-1-1">
+                {{> Template.dynamic template=header }}
+                <ul class="uk-breadcrumb">
+                {{> Template.dynamic template=breadcrumb }}
+                </ul>
+                {{> Template.dynamic template=main }}
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="TopBar">
+    <a class="uk-navbar-brand" href="#">PhyloDB</a>
+    <nav class="uk-navbar">
+        <div class="uk-navbar-flip">
+            <ul class="uk-navbar-nav">
+                <li>
+                    <a href="#">Welcome, <b>Guest</b></a>
+                </li>
+                <li>
+                    <a href="#" id="login">Log in</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</template>
+
+<template name="Header">
+    <div>
+        <p style="font-weight: 300; font-size: 200%">PhyloDB</p>
+    </div>
+</template>

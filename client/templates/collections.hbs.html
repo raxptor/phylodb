@@ -1,0 +1,94 @@
+<template name="BreadcrumbCollections">
+    {{> BreadcrumbHome }}
+    <li>
+        <a href="{{ urlFor 'allCollections' }}">Collections</a>
+    </li>
+</template>
+
+<template name="Collections">
+    <h2>Collections</h2>
+    <hr />
+    <div class="uk-grid uk-margin-bottom">
+        <div class="uk-width-1-2">
+            <button class="uk-button" data-uk-modal="{target: '#addCollections'}">Add collection</button>
+        </div>
+        <div class="uk-width-1-2 uk-text-right">
+            <span class="uk-button-group" data-uk-switcher="{connect:'#toggleView', animation: 'fade'}">
+                <button class="uk-button uk-active" data-uk-tooltip="{animation:true, delay:200}" title="Switch to list view">
+                    <i class="uk-icon-list-ul"></i>
+                </button>
+                <button class="uk-button" data-uk-tooltip="{animation:true, delay:200}" title="Switch to tile view">
+                    <i class="uk-icon-th-large"></i>
+                </button>
+            </span>
+            <span class="uk-form">
+                <div class="uk-form-icon">
+                    <i class="uk-icon-filter"></i>
+                    <input type="text" placeholder="Filter">
+                </div>
+            </span>
+        </div>
+    </div>
+    
+    <ul class="uk-switcher" id="toggleView">
+        <li>
+            <table class="uk-table uk-table-striped uk-table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th class="uk-text-center">Description</th>
+                        <th class="uk-text-center">Created by</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {{# if isSubReady 'allCollections' }}
+                    {{# each allCollections }}
+                        <tr>
+                            <td>
+                                <a href="{{ urlFor 'oneCollection' id=slug }}">{{ name }}</a>
+                            </td>
+                            <td>{{ description }}</td>
+                            <td>{{ createdBy }}</td>
+                            <td class="uk-text-right">
+                                <a href="#" class="uk-icon-edit editCollection" data-uk-tooltip="{animation:true, delay:200}" title="Edit collection"></a>
+                                <a href="#" class="uk-icon-trash-o deleteCollection" data-uk-tooltip="{animation:true, delay:200}" title="Delete collection"></a>
+                            </td>
+                        </tr>
+                    {{ else }}
+                        <tr>
+                            <td class="uk-text-center" colspan="4">There are no collections to display.</td>
+                        </tr>
+                    {{/ each }}
+                {{ else }}
+                    <tr>
+                        <td class="uk-text-center" colspan="4">Loading collections...</td>
+                    </tr>
+                {{/ if }}
+                </tbody>
+            </table>
+        </li>
+        <li>
+            <div class="uk-grid-width-large-1-4" data-uk-grid="{gutter: 20}">
+            {{# if isSubReady 'allCollections' }}
+                {{# each allCollections }}
+                    <div>
+                        <div class="uk-panel uk-panel-box">
+                            <h3 class="uk-panel-title">
+                                <a href="{{ urlFor 'oneCollection' id=slug }}">{{ name }}</a>
+                            </h3>
+                            {{ description }}
+                        </div>
+                    </div>
+                {{/ each }}
+            {{/ if }}
+            </div>
+        </li>
+    </ul>
+    
+    <div id="addCollections" class="uk-modal">
+        <div class="uk-modal-dialog uk-modal-dialog-large">
+            {{> CollectionsAdd }}
+        </div>
+    </div>
+</template>

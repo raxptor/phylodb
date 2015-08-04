@@ -1,0 +1,25 @@
+<template name="CollectionTaxaAdd">
+    <a class="uk-modal-close uk-close"></a>
+    <div class="uk-modal-header">
+        <h2>Add taxa</h2>
+    </div>
+    <p>Use this form to add taxa to a collection. <!--Multiple taxa can be added at once by separating individual taxa with a semicolon (';').--> Taxon names will automatically be converted to proper case (i.e. first character of the first word will be capitalized, the remainder will be lower case). To force a different capitalization, surround the taxon name in double quotes ('"').</p>
+    {{# autoForm class="uk-form uk-form-horizontal" collection="Taxa" id="addCollectionTaxonForm" }}
+    <div class="uk-form-row">
+        <label class="uk-form-label">Name(s)</label>
+
+        <div class="uk-form-control">
+            <div class="uk-autocomplete uk-width-2-3" id="taxaComplete">
+                {{> afFieldInput class="uk-width-1-2" name="name" placeholder="Name(s)" }}
+                <em>{{ afFieldMessage name="name" }}</em>
+            </div>
+        </div>
+    </div>
+
+    <div class="uk-modal-footer">
+        <div class="uk-form-row">
+            <button class="uk-button uk-button-primary" type="submit">Add taxon</button>
+        </div>
+    </div>
+    {{/ autoForm }}
+</template>

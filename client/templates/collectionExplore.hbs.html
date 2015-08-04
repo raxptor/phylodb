@@ -1,0 +1,102 @@
+<template name="BreadcrumbCollectionBrowse">
+    {{# if isSubReady 'oneCollection' }}
+        {{> BreadcrumbCollection }}
+        <li>
+            <a href="{{ urlFor 'oneCollectionBrowse' id=oneCollection.slug }}">Browse</a>
+        </li>
+    {{/ if }}
+</template>
+
+<template name="CollectionBrowse">
+    {{# if isSubReady 'oneCollection' }}
+        <h2>{{ oneCollection.name }}</h2>
+        <h3>Browse</h3>
+        <hr />
+    {{/ if }}
+    
+    <div class="uk-grid">
+
+        <form class="uk-form" id="showExploreTaxon" name="addExploreTaxon">
+            <span class="uk-form-help-inline">Add taxon:</span>
+                <select>
+                {{# each exploreTaxa.hide }}
+                    <option value="{{ slug }}">{{ name }}</option>
+                {{/ each }}
+            </select>
+            <button class="uk-button uk-button-primary" type="submit">Add</button>
+        </form>
+
+    </div>
+
+    <table class="uk-table uk-table-striped uk-table-hover">
+        <thead>
+            <th>Character</th>
+            {{# each exploreTaxa.show }}
+                <th class="uk-text-center">{{ name }}
+                    <a href="#" class="removeTaxon"><i class="uk-icon-minus-circle"></i></a>
+                </th>
+            {{/ each }}
+            <th></th>
+        </thead>
+        <tbody>
+            {{# if exploreTaxa.show.length }}
+                {{# each characters }}
+                    <tr>
+                        <td>
+                            <a href="#" data-uk-toggle="{target:'#char-{{ slug }}'}">{{ description }}</a>
+                            <div class="uk-hidden" id="char-{{ slug }}">
+                                <ol start="0">
+                                    {{# each statements }}
+                                    <li>{{ this }}</li>
+                                    {{/ each }}
+                                </ol>
+                            </div>
+                        </td>
+                        {{# each exploreTaxa.show }}
+                            <td class="uk-text-center">
+                                <span>{{ formatStateSet this .. }}</span>
+                                <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}">
+
+                                    <!-- This is the button toggling the dropdown -->
+                                    <a href="#"><i class="uk-icon-edit"></i></a>
+
+                                    <!-- This is the dropdown -->
+                                    <div class="uk-dropdown">
+                                        <form class="uk-form setState">
+                                            <div class="uk-form-row uk-text-left">
+                                            {{# each ../statements }}
+                                                <label>
+                                                    <input class="statementCheckbox" type="checkbox" />
+                                                    {{ this }}
+                                                </label>
+                                                <br>
+                                            {{/ each }}
+                                            <label>
+                                                <input class="unknownCheckbox" type="checkbox" />
+                                                Unknown/inapplicable
+                                            </label>
+                                            </div>
+                                            <div class="uk-form-row">
+                                                <button class="uk-button uk-button-primary uk-dropdown-close">Set</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    
+                                </div>
+                            </td>
+                        {{/ each }}
+                        <td class="uk-text-right"></td>
+                    </tr>
+                {{ else }}
+                    <tr>
+                        <td class="uk-text-center" colspan="0">There are no characters to display.</td>
+                    </tr>
+                {{/ each }}
+            {{ else }}
+                <tr>
+                    <td class="uk-text-center" colspan="2">There are no taxa to display.</td>
+                </tr>
+            {{/ if }}
+        </tbody>
+    </table>
+</template>

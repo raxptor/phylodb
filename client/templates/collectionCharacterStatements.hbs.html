@@ -1,0 +1,73 @@
+<template name="BreadcrumbCollectionCharacterStatements">
+    {{# if isSubReady 'oneCollection' }}
+        {{> BreadcrumbCollection }}
+        <li>
+            <a href="{{ urlFor 'oneCollectionCharacterStatements' id=oneCollection.slug }}">Character Statements</a>
+        </li>
+    {{/ if }}
+</template>
+
+<template name="CollectionCharacterStatements">
+    {{# if isSubReady 'oneCollection' }}
+        <h2>{{ oneCollection.name }}</h2>
+        <h3>List of character statements</h3>
+        <hr />
+
+        <div class="uk-grid uk-margin-bottom">
+            <div class="uk-width-1-2">
+                <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}">
+                    <button class="uk-button">Add character statements <i class="uk-icon-caret-down"></i></button>
+                    <div class="uk-dropdown uk-dropdown-small">
+                        <ul class="uk-nav uk-nav-dropdown">
+                            <li><a data-uk-modal="{target: '#collectionCharacterStatementsAdd'}">New</a></li>
+                            <li><a href="">Existing</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-width-1-2 uk-text-right">
+                <div class="uk-form">
+                    <div class="uk-form-icon">
+                        <i class="uk-icon-filter"></i>
+                        <input type="text" placeholder="Filter">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <table class="uk-table uk-table-striped uk-table-hover">
+            <thead>
+                <th>Name</th>
+                <th class="uk-text-center">Statements</th>
+                <th></th>
+            </thead>
+            <tbody>
+                {{# if isSubReady 'collectionCharacterStatements' }}
+                    {{# each collectionCharacterStatements }}
+                    <tr>
+                        <td>{{ fullName }}</td>
+                        <td class="uk-text-center">{{ statements.length }}</td>
+                        <td class="uk-text-right">
+                            <a class="uk-icon-minus-circle removeCharacterStatement"></a>
+                        </td>
+                    </tr>
+                    {{ else }}
+                    <tr>
+                        <td class="uk-text-center" colspan="3">There are no characters to display.</td>
+                    </tr>
+                    {{/ each }}
+                {{ else }}
+                    <tr>
+                        <td class="uk-text-center" colspan="3">Loading characters...</td>
+                    </tr>
+                {{/ if }}
+            </tbody>
+        </table>
+
+        <div id="collectionCharacterStatementsAdd" class="uk-modal">
+            <div class="uk-modal-dialog uk-modal-dialog-large">
+                {{> CollectionCharacterStatementsAdd }}
+            </div>
+        </div>
+    {{/ if }}
+</template>
